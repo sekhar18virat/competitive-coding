@@ -23,7 +23,7 @@ while(j>=-1):
         print(" ",end=" ")
     print("*",end=" ")
     for f in range(j):
-        print(" ",end=" ")
+        print("*",end=" ")
     if(j!=-1):
         print("*")
     x+=1
