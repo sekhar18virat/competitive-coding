@@ -57,13 +57,17 @@ class Tree{
             void preorder(Node *root);
             void postorder(Node *root);
             void createTree();
+            int countnoofnodes(Node *root);
+            int leafnodes(Node *root);
+            int degree1nodes(Node *root);
+            int degree2nodes(Node *root);
 };
 
 void Tree::createTree(){
     Node *p,*t;
     int x;
     queue q(100);
-    cout<<"enter root value";
+    cout<<"enter root value ";
     cin>>x;
     root=new Node;
     root->data=x;
@@ -73,6 +77,7 @@ void Tree::createTree(){
         p=q.dequeue();
         cout<<"enter left child of ";
         cout<<p->data;
+        cout<<" ";
         cin>>x;
         if(x!=-1){
             t=new Node;
@@ -83,6 +88,7 @@ void Tree::createTree(){
         }
         cout<<"enter right child of ";
         cout<<p->data;
+        cout<<" ";
         cin>>x;
         if(x!=-1){
             t=new Node;
@@ -156,6 +162,65 @@ int Tree::Height(Node *p){
     return y+1;
 }
 
+int Tree:: countnoofnodes(Node *p){
+    int x,y;
+    if(p){
+        return countnoofnodes(p->left)+countnoofnodes(p->right)+1;
+        
+    }
+    return 0;
+}
+
+
+int Tree:: leafnodes(Node *p){
+    int x,y;
+    if(p){
+        x=leafnodes(p->left);
+        y=leafnodes(p->right);
+        if(p->left==NULL and p->right==NULL){
+            return x+y+1;
+        }
+        else{
+            return x+y;
+        }
+    }
+    return 0;
+    
+}
+
+int Tree::degree1nodes(Node *p){
+    int x,y;
+    if(p){
+        x=degree1nodes(p->left);
+        y=degree1nodes(p->right);
+        if((p->left==NULL and p->right!=NULL) or (p->left!=NULL and p->right==NULL)){
+            return x+y+1;
+        }
+        else{
+            return x+y;
+        }
+    }
+    return 0;
+    
+}
+
+int Tree::degree2nodes(Node *p){
+    int x,y;
+    if(p){
+        x=degree2nodes(p->left);
+        y=degree2nodes(p->right);
+        if(p->left!=NULL and p->right!=NULL){
+            return x+y+1;
+        }
+        else{
+            return x+y;
+        }
+    }
+    return 0;
+    
+}
+
+
 int main()
 {
     Tree t;
@@ -174,6 +239,20 @@ int main()
     cout<<"\n";
     cout<<"the height of tree is ";
     cout<<t.Height(t.root);
+    cout<<"\n";
+    
+    cout<<"No.of nodes in tree ";
+    cout<<t.countnoofnodes(t.root);
+    cout<<"\n";
+    cout<<"No.of  leaf nodes in tree ";
+    cout<<t.leafnodes(t.root);
+    cout<<"\n";
+     cout<<"No.of nodesof degree 1 in tree ";
+    cout<<t.degree1nodes(t.root);
+    cout<<"\n";
+     cout<<"No.of nodes of degree 2 in tree ";
+    cout<<t.degree2nodes(t.root);
+    cout<<"\n";
     
     return 0;
 }
