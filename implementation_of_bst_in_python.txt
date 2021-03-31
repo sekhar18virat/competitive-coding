@@ -1,0 +1,149 @@
+class binarysearchtree:
+    def __init__(self,data):
+        self.data=data
+        self.left=None
+        self.right=None
+    def add_child(self,data):
+        if self.data==data:
+            return
+        if data<self.data:
+            if self.left:
+                self.left.add_child(data)
+            else:
+                self.left=binarysearchtree(data)
+        if data>self.data:
+            if self.right:
+                self.right.add_child(data)
+            else:
+                self.right=binarysearchtree(data)
+    def inorder(self):
+        ele=[]
+        if self.left:
+            ele+=self.left.inorder()
+        ele.append(self.data)
+        if self.right:
+            ele+=self.right.inorder()
+        return ele
+    
+    def preorder(self):
+        ele=[]
+        ele.append(self.data)
+        if self.left:
+            ele+=self.left.preorder()
+        if self.right:
+            ele+=self.right.preorder()
+        return ele
+    
+    def postorder(self):
+        ele=[]
+        
+        if self.left:
+            ele+=self.left.preorder()
+        if self.right:
+            ele+=self.right.preorder()
+        ele.append(self.data)
+        return ele
+
+    def search_tree(self,data):
+        if self.data==key:
+            return 1
+        if self:
+            if data< self.data:
+                if self.left:
+                    return self.left.search_tree(data)
+                else:
+                    return 0
+            if data>self.data:
+                if self.right:
+                    return self.right.search_tree(data)
+                else:
+                    return 0
+        else:
+            return 0
+        
+    def nnleaf(self):
+        if self.left==None and self.right==None:
+            return 1
+        else:
+            a=0
+            b=0
+            if self.left:
+                a=self.left.nnleaf()
+            if self.right:
+                b=self.right.nnleaf()
+            return a+b
+    def numnodes(self):
+        if self:
+            a=0
+            b=0
+            if self.left:
+                a=self.left.numnodes()
+            if self.right:
+                b=self.right.numnodes()
+            return 1+a+b
+        else:
+            return 0
+    
+    def full_nodes(self):
+        if self.left!=None and self.right!=None:
+            return 1+self.left.full_nodes()+self.right.full_nodes()
+        else:
+            a=0
+            b=0
+            if self.left:
+                a=self.left.full_nodes()
+            if self.right:
+                b=self.right.full_nodes()
+            return a+b
+    
+    def find_min(self):
+        if self.left==None:
+            return self.data
+        return self.left.find_min()
+    
+    def find_max(self):
+        if self.right==None:
+            return self.data
+        return self.right.find_max()
+    
+    def delete_tree(self,data):
+        if data<self.data:
+            if self.left:
+                self.left.delete_tree(data)
+        elif data>self.data:
+            if self.right:
+                self.right.delete_tree(data)
+        else:
+            if self.left is None and self.right is None:
+                return
+            if self.left is None:
+                return self.right
+            if self.right is None:
+                return self.left
+        min_val=self.find_min()
+        self.data=min_val
+        self.left=self.left.delete_tree(min_val)
+        return 
+    
+        
+        
+def build_tree(li):
+    root=binarysearchtree(li[0])
+    
+    for i in range(1,len(li)):
+        root.add_child(li[i])
+    return root
+
+li=list(map(int,input().split()))
+k=build_tree(li)
+key=int(input())
+print(k.inorder())
+print(k.preorder())
+print(k.postorder())
+print(k.search_tree(key))
+print(k.nnleaf())
+print(k.numnodes())
+print(k.full_nodes())
+delkey=int(input())
+k.delete_tree(delkey)
+print(k.inorder())
